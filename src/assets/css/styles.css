@@ -1,0 +1,124 @@
+.bg-atlas {
+  background-color: rgb(253, 70, 70) !important;
+}
+
+header {
+  margin-bottom: 70px;
+}
+
+.logo {
+  display: block;
+  float: left;
+  margin-right: 15px;
+  animation: latir infinite 1500ms linear;
+}
+
+.latirClass {
+  animation: latir infinite 2500ms linear;
+}
+
+.width32px {
+  width: 32px;
+}
+
+.width10pc {
+  width: 10%;
+}
+
+.fluidContent {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+@keyframes latir {
+  0% {
+    transform: scale(1, 1);
+  }
+
+  50% {
+    transform: scale(1.05, 1.05);
+  }
+
+  55% {
+    transform: scale(0.95, 0.95);
+  }
+
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+.sliderBar {
+  text-align: center;
+  background-color: rgb(255, 70, 70);
+}
+
+.login-main-container {
+  text-align: center;
+  color: rgb(0, 0, 0);
+}
+
+.cardsMargin {
+  margin-top: -16px;
+}
+
+.centerContent {
+  align-content: center;
+  text-align: center;
+}
+
+.center {
+  width: 75%;
+  margin: 0px auto;
+  text-align: center;
+}
+
+#footer {
+  background: #f7f7f7;
+  width: 100%;
+  height: 70px;
+  line-height: 70px;
+  color: #444;
+}
+
+#footer p {
+  margin: 0px;
+  padding: 0px;
+}
+
+.roundiv {
+  border-radius: 15px;
+  padding: 10px;
+}
+.margenFormCard {
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-bottom: 15px;
+  margin-right: 15px;
+}
+.margin-top-15p {
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.centered-logo {
+  margin-top: 50px;
+  margin-top: -225px;
+}
+
+/* Sobreescrito de bootstrap */
+
+.dropdown-item:active,
+.active {
+  background-color: rgb(253, 70, 70) !important;
+}
+
+.nav-link {
+  margin-left: 1px;
+  margin-right: 1px;
+}
