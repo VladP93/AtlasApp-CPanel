@@ -54,12 +54,6 @@ export default function HomeForm() {
         <br />
         <p style={{ textAlign: "justify" }}>Administradores</p>
       </div>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </div>
   );
 }

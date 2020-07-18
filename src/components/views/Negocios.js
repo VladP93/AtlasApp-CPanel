@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../common/Header";
 import Slider from "../common/Slider";
+import Footer from "../common/Footer";
 
 export default function Negocios() {
   const filtro = [
@@ -41,7 +42,7 @@ export default function Negocios() {
           isList={true}
         />
       </div>
-      <h1 className="centered">Negocios</h1>
+      <Footer fixed={true} />
     </div>
   );
 }

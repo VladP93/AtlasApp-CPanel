@@ -1,6 +1,8 @@
 import React from "react";
 import Header from "../common/Header";
 import Slider from "../common/Slider";
+import ResumenForm from "../forms/ResumenForm";
+import Footer from "../common/Footer";
 
 export default function Resumen() {
   return (
@@ -8,8 +10,10 @@ export default function Resumen() {
       <Header />
       <div className="container-fluid fluidContent">
         <Slider texto="Resumen de AtlasApp" isResumen={true} />
+        <br />
+        <ResumenForm />
       </div>
-      <h1 className="centered">Resumen</h1>
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../common/Header";
 import Slider from "../common/Slider";
+import Footer from "../common/Footer";
 
 export default function Repartidores() {
   const filtro = [
@@ -43,13 +44,13 @@ export default function Repartidores() {
       <Header />
       <div className="container-fluid fluidContent">
         <Slider
-          texto="Negocios afiliados"
+          texto="Socios repartidores"
           padre="/repartidores"
           filtro={filtro}
           isList={true}
         />
       </div>
-      <h1 className="centered">Lista de repartidores</h1>
+      <Footer fixed={true} />
     </div>
   );
 }

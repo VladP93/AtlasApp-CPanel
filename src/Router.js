@@ -17,7 +17,6 @@ import CrearAdministrador from "./components/views/CrearAdministrador";
 import NotFound from "./components/views/NotFound";
 
 /*Components*/
-import Footer from "./components/common/Footer";
 
 export default function Router(props) {
   return (
@@ -41,7 +40,6 @@ export default function Router(props) {
 
         <Route component={NotFound} />
       </Switch>
-      <Footer />
     </BrowserRouter>
   );
 }

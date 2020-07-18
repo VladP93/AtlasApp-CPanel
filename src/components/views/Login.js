@@ -1,6 +1,7 @@
 import React from "react";
 import Atlaspng from "../../assets/images/Atlas.png";
 import LoginForm from "../forms/LoginForm";
+import Footer from "../common/Footer";
 
 export default function Login() {
   return (
@@ -19,6 +20,7 @@ export default function Login() {
         <div className="col-lg-4 col-md-3 col-sm-2"></div>
       </div>
       <div className="clearfix"></div>
+      <Footer fixed={true} />
     </React.Fragment>
   );
 }

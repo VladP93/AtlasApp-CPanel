@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../common/Header";
 import Slider from "../common/Slider";
+import Footer from "../common/Footer";
 import HomeForm from "../forms/HomeForm";
 
 export default function Home() {
@@ -13,11 +14,7 @@ export default function Home() {
         <HomeForm />
       </div>
       <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+      <Footer />
     </div>
   );
 }

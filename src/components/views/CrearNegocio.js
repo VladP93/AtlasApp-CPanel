@@ -1,6 +1,8 @@
 import React from "react";
 import Header from "../common/Header";
 import Slider from "../common/Slider";
+import Footer from "../common/Footer";
+import NegocioForm from "../forms/NegocioForm";
 
 export default function CrearNegocio() {
   return (
@@ -8,8 +10,11 @@ export default function CrearNegocio() {
       <Header />
       <div className="container-fluid fluidContent">
         <Slider texto="Registrar un negocio" dynamicText="" />
+        <br />
+        <NegocioForm />
       </div>
-      <h1 className="centered">Nuevo Negocios</h1>
+      <br />
+      <Footer />
     </div>
   );
 }

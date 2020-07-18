@@ -1,6 +1,8 @@
 import React from "react";
 import Header from "../common/Header";
 import Slider from "../common/Slider";
+import RepartidorForm from "../forms/RepartidorForm";
+import Footer from "../common/Footer";
 
 export default function CrearRepartidor() {
   return (
@@ -8,8 +10,9 @@ export default function CrearRepartidor() {
       <Header />
       <div className="container-fluid fluidContent">
         <Slider texto="Afiliar Repartidor" dynamicText="" />
+        <RepartidorForm />
       </div>
-      <h1 className="centered">Nuevo Repartidor</h1>
+      <Footer />
     </div>
   );
 }

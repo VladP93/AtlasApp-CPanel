@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../common/Header";
 import Slider from "../common/Slider";
+import Footer from "../common/Footer";
 
 export default function Administradores() {
   const filtro = [
@@ -34,13 +35,13 @@ export default function Administradores() {
       <Header />
       <div className="container-fluid fluidContent">
         <Slider
-          texto="Negocios afiliados"
+          texto="Lista de Administradores"
           padre="/administradores"
           filtro={filtro}
           isList={true}
         />
       </div>
-      <h1 className="centered">Lista de administradores</h1>
+      <Footer fixed={true} />
     </div>
   );
 }
