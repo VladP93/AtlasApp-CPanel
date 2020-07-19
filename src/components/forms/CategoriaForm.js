@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
+import Swal from "sweetalert2";
 import { firebaseApp } from "../../utils/firebase";
 import firebase from "firebase/app";
 import "firebase/firestore";
@@ -7,11 +8,14 @@ import "firebase/firestore";
 const db = firebase.firestore(firebaseApp);
 
 export default function CategoriaForm(props) {
-  const { onchangeText } = props;
+  const { onchangeText, id } = props;
   const [redirecting, setRedirecting] = useState(false);
+  const [redirectTo404, setRedirectTo404] = useState(false);
   const [nuevaCategoria, setNuevaCategoria] = useState("");
+  const [label, setLabel] = useState("Nueva Categoría");
 
   useEffect(() => {
+    console.log("useEff");
     firebase
       .auth()
       .signInWithEmailAndPassword("vladimirpaniagua@gmail.com", "pass123")
@@ -21,7 +25,20 @@ export default function CategoriaForm(props) {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+    if (id) {
+      db.collection("categorias")
+        .doc(id)
+        .get()
+        .then((res) => {
+          if (res.data()) {
+            setLabel("Editar Categoría");
+            document.getElementById("categoria").value = res.data().categoria;
+          } else {
+            setRedirectTo404(true);
+          }
+        });
+    }
+  }, [id]);
 
   const onchange = (e) => {
     setNuevaCategoria(e.target.value);
@@ -31,20 +48,45 @@ export default function CategoriaForm(props) {
   const submitCategoria = (e) => {
     e.preventDefault();
 
-    db.collection("categorias")
-      .add({ categoria: nuevaCategoria })
-      .then((res) => {
-        alert(nuevaCategoria + " agregado");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    setRedirecting(true);
+    if (!id) {
+      db.collection("categorias")
+        .add({ categoria: nuevaCategoria })
+        .then(() => {
+          Swal.fire(
+            "Categoría agregada",
+            nuevaCategoria + " ha sido agregado correctamente",
+            "success"
+          );
+          setRedirecting(true);
+        })
+        .catch((err) => {
+          Swal.fire("Algo salió mal", "Error: " + err, "error");
+        });
+    } else {
+      db.collection("categorias")
+        .doc(id)
+        .update({ categoria: nuevaCategoria })
+        .then(() => {
+          Swal.fire(
+            "Categoría editada",
+            "La categoría " +
+              nuevaCategoria +
+              " ha sido actualizada correctamente",
+            "success"
+          );
+          setRedirecting(true);
+        })
+        .catch((err) => {
+          Swal.fire("Algo salió mal", "Error: " + err, "error");
+        });
+    }
   };
 
   if (redirecting) {
-    return <Redirect to="/negocios/crear" />;
+    return <Redirect to="/categorias" />;
+  }
+  if (redirectTo404) {
+    return <Redirect to="/error" />;
   }
 
   return (
@@ -57,15 +99,16 @@ export default function CategoriaForm(props) {
         }}
       >
         <div className="form-group">
-          <label htmlFor="formGroupExampleInput">Nueva categoría</label>
+          <label htmlFor="categoria">{label}</label>
           <input
             type="text"
             className="form-control"
-            id="formGroupExampleInput"
+            id="categoria"
             placeholder="Categoría"
             onChange={(e) => {
               onchange(e);
             }}
+            required
           />
         </div>
         <input type="submit" value="Guardar" className="btn btn-success" />

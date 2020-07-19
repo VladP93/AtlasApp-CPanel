@@ -11,6 +11,8 @@ export default function Slider(props) {
     isResumen,
     dynamicText,
     hideBar,
+    selectOnChange,
+    buscar,
   } = props;
 
   return (
@@ -23,7 +25,12 @@ export default function Slider(props) {
       {!hideBar && (
         <div className="text-white roundiv sliderBar">
           {isList ? (
-            <SliderBarForm padre={padre} filtro={filtro} />
+            <SliderBarForm
+              padre={padre}
+              filtro={filtro}
+              selectOnChange={selectOnChange}
+              buscar={buscar}
+            />
           ) : (
             <h2 style={{ textAlign: "center", margin: "auto" }}>
               {isResumen ? "Resumen corto" : "Registrando: " + dynamicText}

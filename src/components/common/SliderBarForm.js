@@ -2,26 +2,41 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function SliderBarForm(props) {
-  const { padre, filtro } = props;
+  const { padre, filtro, selectOnChange, buscar } = props;
   const [toCreate, setToCreate] = useState("/");
+  const [buscarTxt, setBuscarTxt] = useState("");
 
   useEffect(() => {
-    //console.log("useEffect");
     setToCreate(padre + "/crear");
   }, [padre]);
 
-  const onchangeSelect = (e) => {
-    //console.log(e.target.value);
+  const onChangeSelect = (e) => {
+    if (selectOnChange) {
+      selectOnChange(e.target.value);
+    }
+  };
+
+  const onChangeText = (e) => {
+    setBuscarTxt(e.target.value);
+  };
+
+  const buscarSubmit = (e) => {
+    e.preventDefault();
+    buscar(buscarTxt);
   };
 
   return (
-    <form>
+    <form
+      onSubmit={(e) => {
+        buscarSubmit(e);
+      }}
+    >
       <div className="form-group row" style={{ margin: 2 }}>
         <select
           className="form-control col-md-3 col-sm-12 col-xs-12"
           name="ordenar"
           style={{ marginRight: 5 }}
-          onChange={(e) => onchangeSelect(e)}
+          onChange={(e) => onChangeSelect(e)}
         >
           <option value="">Ordenar por...</option>
           {filtro.map((f) => {
@@ -37,6 +52,9 @@ export default function SliderBarForm(props) {
           className="form-control col-md-3 col-sm-9 col-sx-6"
           name="buscar"
           placeholder="Buscar"
+          onChange={(e) => {
+            onChangeText(e);
+          }}
         />
         <button
           type="submit"

@@ -122,3 +122,25 @@ header {
   margin-left: 1px;
   margin-right: 1px;
 }
+
+.floatLeft {
+  float: left;
+}
+
+.menuList,
+.menuList:active,
+.menuList:focus,
+.menuList:target {
+  text-decoration: none;
+  color: black;
+  border: none;
+  padding: 0;
+  background: none;
+  outline: 0;
+}
+.menuList:hover {
+  color: rgb(253, 70, 70);
+  border: none;
+  padding: 0;
+  background: none;
+}
