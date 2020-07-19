@@ -13,9 +13,9 @@ export default function CategoriaForm(props) {
   const [redirectTo404, setRedirectTo404] = useState(false);
   const [nuevaCategoria, setNuevaCategoria] = useState("");
   const [label, setLabel] = useState("Nueva Categoría");
+  const [viejaCategoria, setViejaCategoria] = useState("");
 
   useEffect(() => {
-    console.log("useEff");
     firebase
       .auth()
       .signInWithEmailAndPassword("vladimirpaniagua@gmail.com", "pass123")
@@ -32,13 +32,14 @@ export default function CategoriaForm(props) {
         .then((res) => {
           if (res.data()) {
             setLabel("Editar Categoría");
-            document.getElementById("categoria").value = res.data().categoria;
+            setViejaCategoria(res.data().categoria);
+            document.getElementById("categoria").value = viejaCategoria;
           } else {
             setRedirectTo404(true);
           }
         });
     }
-  }, [id]);
+  }, [id, viejaCategoria]);
 
   const onchange = (e) => {
     setNuevaCategoria(e.target.value);
@@ -63,22 +64,33 @@ export default function CategoriaForm(props) {
           Swal.fire("Algo salió mal", "Error: " + err, "error");
         });
     } else {
-      db.collection("categorias")
-        .doc(id)
-        .update({ categoria: nuevaCategoria })
-        .then(() => {
-          Swal.fire(
-            "Categoría editada",
-            "La categoría " +
-              nuevaCategoria +
-              " ha sido actualizada correctamente",
-            "success"
-          );
-          setRedirecting(true);
-        })
-        .catch((err) => {
-          Swal.fire("Algo salió mal", "Error: " + err, "error");
-        });
+      if (nuevaCategoria.length === 0) {
+        Swal.fire(
+          "La categoría no ha sido editada",
+          "No se han producido cambios",
+          "info"
+        );
+        setRedirecting(true);
+      } else {
+        db.collection("categorias")
+          .doc(id)
+          .update({ categoria: nuevaCategoria })
+          .then(() => {
+            Swal.fire(
+              "Categoría editada",
+              "La categoría " +
+                viejaCategoria +
+                " ha sido cambiada por " +
+                nuevaCategoria +
+                " correctamente",
+              "success"
+            );
+            setRedirecting(true);
+          })
+          .catch((err) => {
+            Swal.fire("Algo salió mal", "Error: " + err, "error");
+          });
+      }
     }
   };
 
