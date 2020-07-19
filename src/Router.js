@@ -45,7 +45,7 @@ export default function Router(props) {
           component={CrearAdministrador}
         />
 
-        <Route component={Logout} />
+        <Route path="/logout" component={Logout} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
