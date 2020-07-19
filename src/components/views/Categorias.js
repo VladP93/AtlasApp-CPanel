@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
 
 import { firebaseApp } from "../../utils/firebase";
 import { FireSQL } from "firesql";
@@ -21,16 +20,6 @@ export default function Categorias() {
 
   useEffect(() => {
     if (sortParam === "") {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword("vladimirpaniagua@gmail.com", "pass123")
-        .then(() => {
-          //Hacer Algo xD
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
       db.collection("categorias")
         .get()
         .then((response) => {
@@ -66,16 +55,6 @@ export default function Categorias() {
   ];
 
   const dataFill = (orderBy, order) => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword("vladimirpaniagua@gmail.com", "pass123")
-      .then(() => {
-        //Hacer Algo xD
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
     db.collection("categorias")
       .orderBy(orderBy, order)
       .get()

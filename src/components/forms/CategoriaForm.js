@@ -16,15 +16,6 @@ export default function CategoriaForm(props) {
   const [viejaCategoria, setViejaCategoria] = useState("");
 
   useEffect(() => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword("vladimirpaniagua@gmail.com", "pass123")
-      .then(() => {
-        //Hacer algo xDD
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     if (id) {
       db.collection("categorias")
         .doc(id)
@@ -33,7 +24,6 @@ export default function CategoriaForm(props) {
           if (res.data()) {
             setLabel("Editar Categoría");
             setViejaCategoria(res.data().categoria);
-            document.getElementById("categoria").value = viejaCategoria;
           } else {
             setRedirectTo404(true);
           }
@@ -117,6 +107,7 @@ export default function CategoriaForm(props) {
             className="form-control"
             id="categoria"
             placeholder="Categoría"
+            defaultValue={viejaCategoria}
             onChange={(e) => {
               onchange(e);
             }}

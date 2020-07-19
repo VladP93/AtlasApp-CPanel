@@ -18,6 +18,7 @@ import CrearAdministrador from "./components/views/CrearAdministrador";
 import NotFound from "./components/views/NotFound";
 
 /*Components*/
+import Logout from "./components/common/Logout";
 
 export default function Router(props) {
   return (
@@ -44,6 +45,7 @@ export default function Router(props) {
           component={CrearAdministrador}
         />
 
+        <Route component={Logout} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>

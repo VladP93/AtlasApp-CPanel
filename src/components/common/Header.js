@@ -1,12 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import Logo from "../../assets/images/Logo.png";
+import Account from "./Account";
 
 export default function Header() {
   return (
     <header>
+      <Account />
       <nav className="navbar navbar-expand-lg fixed-top navbar-dark bg-atlas">
-        <NavLink className="navbar-brand logo" to={"/"}>
+        <NavLink className="navbar-brand logo" to={"/panel"}>
           <img src={Logo} alt="Logo" className="width32px" />
           AtlasApp
         </NavLink>
@@ -52,6 +54,11 @@ export default function Header() {
             <li className="nav-item">
               <NavLink className="nav-link" to={"/administradores"}>
                 Administradores
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to={"/logout"}>
+                Cerrar Sesión
               </NavLink>
             </li>
           </ul>

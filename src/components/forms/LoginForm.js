@@ -1,12 +1,55 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
+import Swal from "sweetalert2";
+import { firebaseApp } from "../../utils/firebase";
+import firebase from "firebase/app";
+import "firebase/firestore";
+
+const db = firebase.firestore(firebaseApp);
 
 export default function LoginForm() {
   const [isLogged, setIsLogged] = useState(false);
+  const [formData, setFormData] = useState({
+    usuario: "",
+    contrasenia: "",
+  });
 
-  const Loggearse = () => {
-    setIsLogged(true);
-    document.body.style.backgroundColor = "#FFF";
+  const Loggearse = (e) => {
+    e.preventDefault();
+
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(formData.usuario, formData.contrasenia)
+      .then((res) => {
+        db.collection("administradores")
+          .where("uidUser", "==", res.user.uid)
+          .get()
+          .then((res2) => {
+            if (res2.docs.length > 0) {
+              Swal.fire("Bienvenido " + res.user.displayName);
+              setIsLogged(true);
+              document.body.style.backgroundColor = "#FFF";
+            } else {
+              firebase.auth().signOut();
+              setIsLogged(false);
+              Swal.fire(
+                "Error",
+                "El usuario ingresado no está registrado como administrador",
+                "error"
+              );
+            }
+          })
+          .catch((err) => {
+            Swal.fire("Error", err.message, "error");
+          });
+      })
+      .catch((err) => {
+        Swal.fire("Error", "Usuario y/o contraseña incorrectos", "error");
+      });
+  };
+
+  const onChangeForm = (e, type) => {
+    setFormData({ ...formData, [type]: e.target.value });
   };
 
   if (isLogged) {
@@ -16,7 +59,13 @@ export default function LoginForm() {
   document.body.style.backgroundColor = "rgb(253, 70, 70)";
 
   return (
-    <form name="login" className="margenFormCard" onSubmit={Loggearse}>
+    <form
+      name="login"
+      className="margenFormCard"
+      onSubmit={(e) => {
+        Loggearse(e);
+      }}
+    >
       <p>
         <b>Bienvenido a AtlasApp</b>
       </p>
@@ -30,6 +79,10 @@ export default function LoginForm() {
           placeholder="Ingrese Usuario"
           id="user"
           autoComplete="username"
+          onChange={(e) => {
+            onChangeForm(e, "usuario");
+          }}
+          required
         />
       </div>
       <div className="form-group">
@@ -42,6 +95,10 @@ export default function LoginForm() {
           placeholder="Ingrese Contraseña"
           id="pwd"
           autoComplete="current-password"
+          onChange={(e) => {
+            onChangeForm(e, "contrasenia");
+          }}
+          required
         />
       </div>
       <div className="form-group">

@@ -41,16 +41,6 @@ export default function NegocioForm() {
   ];
 
   useEffect(() => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword("vladimirpaniagua@gmail.com", "pass123")
-      .then(() => {
-        //Hacer Algo xD
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
     db.collection("categorias")
       .get()
       .then((response) => {
