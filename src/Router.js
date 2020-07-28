@@ -7,6 +7,7 @@ import Home from "./components/views/Home";
 import Resumen from "./components/views/Resumen";
 import Negocios from "./components/views/Negocios";
 import CrearNegocio from "./components/views/CrearNegocio";
+import EditarNegocio from "./components/views/EditarNegocio";
 import Categorias from "./components/views/Categorias";
 import CrearCategoria from "./components/views/CrearCategoria";
 import EditarCategoria from "./components/views/EditarCategoria";
@@ -19,6 +20,7 @@ import NotFound from "./components/views/NotFound";
 
 /*Components*/
 import Logout from "./components/common/Logout";
+import DetalleNegocio from "./components/views/DetalleNegocio";
 
 export default function Router(props) {
   return (
@@ -29,6 +31,8 @@ export default function Router(props) {
         <Route exact path="/resumen" component={Resumen} />
         <Route exact path="/negocios" component={Negocios} />
         <Route exact path="/negocios/crear" component={CrearNegocio} />
+        <Route exact path="/negocios/editar/:id" component={EditarNegocio} />
+        <Route exact path="/negocios/detalle/:id" component={DetalleNegocio} />
         <Route exact path="/categorias" component={Categorias} />
         <Route exact path="/categorias/crear" component={CrearCategoria} />
         <Route

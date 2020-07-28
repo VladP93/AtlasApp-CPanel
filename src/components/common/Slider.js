@@ -13,6 +13,7 @@ export default function Slider(props) {
     hideBar,
     selectOnChange,
     buscar,
+    resumeText,
   } = props;
 
   return (
@@ -33,7 +34,7 @@ export default function Slider(props) {
             />
           ) : (
             <h2 style={{ textAlign: "center", margin: "auto" }}>
-              {isResumen ? "Resumen corto" : "Registrando: " + dynamicText}
+              {isResumen ? resumeText : "Registrando: " + dynamicText}
             </h2>
           )}
         </div>

@@ -9,7 +9,11 @@ export default function Resumen() {
     <div>
       <Header />
       <div className="container-fluid fluidContent">
-        <Slider texto="Resumen de AtlasApp" isResumen={true} />
+        <Slider
+          texto="Resumen de AtlasApp"
+          isResumen={true}
+          resumeText={"Resumen de Atlas"}
+        />
         <br />
         <ResumenForm />
       </div>
