@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { firebaseApp } from "../../utils/firebase";
 import firebase from "firebase/app";
 import "firebase/firestore";
+import ModalLocal from "./ModalLocal";
 
 const db = firebase.firestore(firebaseApp);
 
@@ -30,30 +30,7 @@ export default function NegocioDetalleLocal(props) {
       });
   }, [id]);
 
-  //Agregar locales
-  //   const ob = {
-  //     dirección: "Una dir",
-  //     location: {
-  //       altitude: "asdasd",
-  //       latitude: "asdasdasdas",
-  //       deltaA: "de",
-  //       deltaLat: "delat",
-  //     },
-  //   };
-  //   const doSome = () => {
-  //     db.collection("negocios")
-  //       .doc(id)
-  //       .collection("locales")
-  //       .add(ob)
-  //       .then(() => {
-  //         alert("agregado");
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-
-  const deleteOnClick = (id, nombre) => {
+  const deleteOnClick = (idLocal, nombre) => {
     Swal.fire({
       title: "¿Está seguro que desea eliminar " + nombre + "?",
       text: "Esta acción no puede deshacerse",
@@ -66,6 +43,8 @@ export default function NegocioDetalleLocal(props) {
       if (result.value) {
         db.collection("negocios")
           .doc(id)
+          .collection("locales")
+          .doc(idLocal)
           .delete()
           .then(() => {
             let timerInterval;
@@ -106,25 +85,8 @@ export default function NegocioDetalleLocal(props) {
             return (
               <div key={loc.id}>
                 <div className="container">
-                  <p className="col-3 floatLeft">{loc.direccion}</p>
-                  <p className="col-3 floatLeft"> </p>
-                  <p className="col-3 floatLeft"></p>
-                  <p className="col-1 floatLeft">
-                    <Link
-                      to={"/negocios/detalle/" + loc.id}
-                      className="menuList"
-                    >
-                      <i className="fas fa-store"></i>
-                    </Link>
-                  </p>
-                  <p className="col-1 floatLeft">
-                    <Link
-                      to={"/negocios/editar/" + loc.id}
-                      className="menuList"
-                    >
-                      <i className="far fa-edit menuList"></i>
-                    </Link>
-                  </p>
+                  <p className="col-5 floatLeft">{loc.nombre}</p>
+                  <p className="col-6 floatLeft">{loc.direccion}</p>
                   <p className="col-1 floatLeft">
                     <button
                       className="menuList"
@@ -143,7 +105,15 @@ export default function NegocioDetalleLocal(props) {
           })}
         </div>
       )}
-      <button className="btn btn-success">+</button>
+      <button
+        className="btn btn-success"
+        data-toggle="modal"
+        data-target="#agregarLocal"
+      >
+        +
+      </button>
+      {/* Modal Local*/}
+      <ModalLocal id={id} />
     </div>
   );
 }

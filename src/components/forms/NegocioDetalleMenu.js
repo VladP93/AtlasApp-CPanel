@@ -4,12 +4,14 @@ import Swal from "sweetalert2";
 import { firebaseApp } from "../../utils/firebase";
 import firebase from "firebase/app";
 import "firebase/firestore";
+import ModalMenu from "./ModalMenu";
 
 const db = firebase.firestore(firebaseApp);
 
 export default function NegocioDetalleMenu(props) {
   const { id } = props;
   const [menu, setMenu] = useState([]);
+  const [idMenu, setIdMenu] = useState(0);
 
   useEffect(() => {
     db.collection("negocios")
@@ -28,32 +30,9 @@ export default function NegocioDetalleMenu(props) {
       .catch((err) => {
         console.log(err);
       });
-  }, [id]);
+  }, [id, idMenu]);
 
-  //Agregar locales
-  //   const ob = {
-  //     dirección: "Una dir",
-  //     location: {
-  //       altitude: "asdasd",
-  //       latitude: "asdasdasdas",
-  //       deltaA: "de",
-  //       deltaLat: "delat",
-  //     },
-  //   };
-  //   const doSome = () => {
-  //     db.collection("negocios")
-  //       .doc(id)
-  //       .collection("locales")
-  //       .add(ob)
-  //       .then(() => {
-  //         alert("agregado");
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-
-  const deleteOnClick = (id, nombre) => {
+  const deleteOnClick = (idMenu, nombre) => {
     Swal.fire({
       title: "¿Está seguro que desea eliminar " + nombre + "?",
       text: "Esta acción no puede deshacerse",
@@ -66,11 +45,13 @@ export default function NegocioDetalleMenu(props) {
       if (result.value) {
         db.collection("negocios")
           .doc(id)
+          .collection("menu")
+          .doc(idMenu)
           .delete()
           .then(() => {
             let timerInterval;
             Swal.fire({
-              title: "Negocio Eliminada",
+              title: "Item de munú Eliminado",
               html: nombre + " ha sido eliminado",
               timer: 1000,
               showCloseButton: false,
@@ -87,11 +68,15 @@ export default function NegocioDetalleMenu(props) {
       } else {
         Swal.fire(
           "Cancelado",
-          "El local: " + nombre + " no se ha eliminado",
+          "El item: " + nombre + " no se ha eliminado",
           "error"
         );
       }
     });
+  };
+
+  const editOnClick = (idMenu) => {
+    setIdMenu(idMenu);
   };
 
   return (
@@ -106,24 +91,20 @@ export default function NegocioDetalleMenu(props) {
             return (
               <div key={men.id}>
                 <div className="container">
-                  <p className="col-3 floatLeft">{men.direccion}</p>
-                  <p className="col-3 floatLeft"> </p>
-                  <p className="col-3 floatLeft"></p>
+                  <p className="col-3 floatLeft">{men.nombre}</p>
+                  <p className="col-4 floatLeft">{men.descripcion}</p>
+                  <p className="col-3 floatLeft">$ {men.precio}</p>
                   <p className="col-1 floatLeft">
-                    <Link
-                      to={"/negocios/detalle/" + men.id}
+                    <button
                       className="menuList"
-                    >
-                      <i className="fas fa-store"></i>
-                    </Link>
-                  </p>
-                  <p className="col-1 floatLeft">
-                    <Link
-                      to={"/negocios/editar/" + men.id}
-                      className="menuList"
+                      data-toggle="modal"
+                      data-target="#agregarMenu"
+                      onClick={() => {
+                        editOnClick(men.id);
+                      }}
                     >
                       <i className="far fa-edit menuList"></i>
-                    </Link>
+                    </button>
                   </p>
                   <p className="col-1 floatLeft">
                     <button
@@ -143,7 +124,18 @@ export default function NegocioDetalleMenu(props) {
           })}
         </div>
       )}
-      <button className="btn btn-success">+</button>
+      <button
+        className="btn btn-success"
+        data-toggle="modal"
+        data-target="#agregarMenu"
+        onClick={() => {
+          editOnClick(0);
+        }}
+      >
+        +
+      </button>
+      {/* Modal Menu*/}
+      <ModalMenu id={id} idMenu={idMenu} />
     </div>
   );
 }
