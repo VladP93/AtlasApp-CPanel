@@ -129,7 +129,7 @@ export default function ModalLocal(props) {
                   <div>
                     <Maps
                       ubicar={ubicar}
-                      googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${Keys.map_key}&callback=initMap&libraries=&v=weekly`}
+                      googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${Keys.map_key}&v=3.exp&libraries=geometry,drawing,places`}
                       loadingElement={<div style={{ height: `100%` }} />}
                       containerElement={<div style={{ height: `400px` }} />}
                       mapElement={<div style={{ height: `100%` }} />}
