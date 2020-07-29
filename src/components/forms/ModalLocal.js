@@ -5,6 +5,8 @@ import { firebaseApp } from "../../utils/firebase";
 import firebase from "firebase/app";
 import "firebase/firestore";
 
+import Keys from "../../utils/Keys";
+
 const db = firebase.firestore(firebaseApp);
 
 export default function ModalLocal(props) {
@@ -127,7 +129,7 @@ export default function ModalLocal(props) {
                   <div>
                     <Maps
                       ubicar={ubicar}
-                      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7d-ZnZqsrJg6gLeIOLHi_lrNOaDGzTb4"
+                      googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${Keys.map_key}&callback=initMap&libraries=&v=weekly`}
                       loadingElement={<div style={{ height: `100%` }} />}
                       containerElement={<div style={{ height: `400px` }} />}
                       mapElement={<div style={{ height: `100%` }} />}
