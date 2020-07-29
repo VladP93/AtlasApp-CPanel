@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -9,8 +9,7 @@ import "firebase/firestore";
 const db = firebase.firestore(firebaseApp);
 
 export default function CategoriaList(props) {
-  const { categorias } = props;
-  const [redirecting, setRedirecting] = useState(false);
+  const { categorias, setReload } = props;
 
   const deleteOnClick = (id, categoria) => {
     Swal.fire({
@@ -27,18 +26,12 @@ export default function CategoriaList(props) {
           .doc(id)
           .delete()
           .then(() => {
-            let timerInterval;
-            Swal.fire({
-              title: "Categoría Eliminada",
-              html: categoria + " ha sido eliminada",
-              timer: 1000,
-              showCloseButton: false,
-              onClose: () => {
-                clearInterval(timerInterval);
-              },
-            }).then((result) => {
-              setRedirecting(true);
-            });
+            Swal.fire(
+              "Categoría Eliminada",
+              categoria + " ha sido eliminada",
+              "success"
+            );
+            setReload(true);
           })
           .catch((err) => {
             Swal.fire("Algo salió mal", "Erro: " + err, "error");
@@ -52,10 +45,6 @@ export default function CategoriaList(props) {
       }
     });
   };
-
-  if (redirecting) {
-    window.location.reload();
-  }
 
   return (
     <div>

@@ -7,7 +7,7 @@ import "firebase/firestore";
 const db = firebase.firestore(firebaseApp);
 
 export default function ModalMenu(props) {
-  const { id, idMenu } = props;
+  const { id, idMenu, setReload } = props;
   const [nuevoMenu, setNuevoMenu] = useState({
     nombre: "",
     descripcion: "",
@@ -52,6 +52,12 @@ export default function ModalMenu(props) {
           Math.round((parseFloat(nuevoMenu.precio) + Number.EPSILON) * 100) /
           100,
       });
+      setNuevoMenu({
+        ...nuevoMenu,
+        precio:
+          Math.round((parseFloat(nuevoMenu.precio) + Number.EPSILON) * 100) /
+          100,
+      });
 
       if (!isEdit) {
         db.collection("negocios")
@@ -64,8 +70,7 @@ export default function ModalMenu(props) {
               "El item " + nuevoMenu.nombre + " ha sido agregado exitosamente",
               "success"
             );
-            setTimeout(2000);
-            window.location.reload();
+            setReload(true);
           })
           .catch((err) => {
             Swal.fire("Error", err, "error");
@@ -183,6 +188,7 @@ export default function ModalMenu(props) {
                 onClick={() => {
                   agregarMenu();
                 }}
+                data-dismiss="modal"
               >
                 Agregar
               </button>

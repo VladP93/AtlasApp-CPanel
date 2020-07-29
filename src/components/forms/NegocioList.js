@@ -11,8 +11,7 @@ import "firebase/firestore";
 const db = firebase.firestore(firebaseApp);
 
 export default function NegocioList(props) {
-  const { negocios } = props;
-  const [redirecting, setRedirecting] = useState(false);
+  const { negocios, setReload } = props;
 
   const deleteOnClick = (id, nombre) => {
     Swal.fire({
@@ -30,17 +29,12 @@ export default function NegocioList(props) {
           .delete()
           .then(() => {
             let timerInterval;
-            Swal.fire({
-              title: "Negocio Eliminada",
-              html: nombre + " ha sido eliminado",
-              timer: 1000,
-              showCloseButton: false,
-              onClose: () => {
-                clearInterval(timerInterval);
-              },
-            }).then((result) => {
-              setRedirecting(true);
-            });
+            Swal.fire(
+              "Negocio Eliminada",
+              nombre + " ha sido eliminado",
+              "success"
+            );
+            setReload(true);
           })
           .catch((err) => {
             Swal.fire("Algo salió mal", "Erro: " + err, "error");
@@ -66,10 +60,6 @@ export default function NegocioList(props) {
       }
     });
   };
-
-  if (redirecting) {
-    window.location.reload();
-  }
 
   return (
     <div>

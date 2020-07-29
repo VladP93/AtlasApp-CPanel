@@ -17,6 +17,7 @@ export default function Categorias() {
   const [categorias, setCategorias] = useState([]);
   const [sortParam, setSortParam] = useState("");
   const [search, setSearch] = useState("");
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     if (sortParam === "") {
@@ -40,8 +41,9 @@ export default function Categorias() {
       dataFill("categoria", "desc");
     }
 
+    setReload(false);
     dataFillSearch(search);
-  }, [sortParam, search]);
+  }, [sortParam, search, reload]);
 
   const filtro = [
     {
@@ -102,7 +104,7 @@ export default function Categorias() {
           selectOnChange={selectOnChange}
           buscar={buscar}
         />
-        <CategoriaList categorias={categorias} />
+        <CategoriaList categorias={categorias} setReload={setReload} />
       </div>
       <Footer />
     </div>

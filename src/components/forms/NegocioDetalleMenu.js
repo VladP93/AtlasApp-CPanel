@@ -12,6 +12,7 @@ export default function NegocioDetalleMenu(props) {
   const { id } = props;
   const [menu, setMenu] = useState([]);
   const [idMenu, setIdMenu] = useState(0);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     db.collection("negocios")
@@ -30,7 +31,9 @@ export default function NegocioDetalleMenu(props) {
       .catch((err) => {
         console.log(err);
       });
-  }, [id, idMenu]);
+
+    setReload(false);
+  }, [id, idMenu, reload]);
 
   const deleteOnClick = (idMenu, nombre) => {
     Swal.fire({
@@ -49,18 +52,12 @@ export default function NegocioDetalleMenu(props) {
           .doc(idMenu)
           .delete()
           .then(() => {
-            let timerInterval;
-            Swal.fire({
-              title: "Item de munú Eliminado",
-              html: nombre + " ha sido eliminado",
-              timer: 1000,
-              showCloseButton: false,
-              onClose: () => {
-                clearInterval(timerInterval);
-              },
-            }).then((result) => {
-              window.location.reload();
-            });
+            Swal.fire(
+              "Item de munú Eliminado",
+              nombre + " ha sido eliminado",
+              "success"
+            );
+            setReload(true);
           })
           .catch((err) => {
             Swal.fire("Algo salió mal", "Erro: " + err, "error");
@@ -135,7 +132,7 @@ export default function NegocioDetalleMenu(props) {
         +
       </button>
       {/* Modal Menu*/}
-      <ModalMenu id={id} idMenu={idMenu} />
+      <ModalMenu id={id} idMenu={idMenu} setReload={setReload} />
     </div>
   );
 }

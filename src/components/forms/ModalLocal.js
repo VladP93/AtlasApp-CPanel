@@ -8,7 +8,7 @@ import "firebase/firestore";
 const db = firebase.firestore(firebaseApp);
 
 export default function ModalLocal(props) {
-  const { id } = props;
+  const { id, setReload } = props;
   const [position, setPosition] = useState({ latitude: "", longitude: "" });
   const [nuevoLocal, setNuevoLocal] = useState({
     nombre: "",
@@ -59,9 +59,10 @@ export default function ModalLocal(props) {
             "success"
           );
           setTimeout(2000);
-          window.location.reload();
+          setReload(true);
         })
         .catch((err) => {
+          console.log(err);
           Swal.fire("Error", err, "error");
         });
     }
@@ -156,6 +157,7 @@ export default function ModalLocal(props) {
                 onClick={() => {
                   agregarLocal();
                 }}
+                data-dismiss="modal"
               >
                 Agregar
               </button>

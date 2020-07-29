@@ -10,6 +10,7 @@ const db = firebase.firestore(firebaseApp);
 export default function NegocioDetalleLocal(props) {
   const { id } = props;
   const [locales, setLocales] = useState([]);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     db.collection("negocios")
@@ -28,7 +29,8 @@ export default function NegocioDetalleLocal(props) {
       .catch((err) => {
         console.log(err);
       });
-  }, [id]);
+    setReload(false);
+  }, [id, reload]);
 
   const deleteOnClick = (idLocal, nombre) => {
     Swal.fire({
@@ -47,18 +49,12 @@ export default function NegocioDetalleLocal(props) {
           .doc(idLocal)
           .delete()
           .then(() => {
-            let timerInterval;
-            Swal.fire({
-              title: "Negocio Eliminada",
-              html: nombre + " ha sido eliminado",
-              timer: 1000,
-              showCloseButton: false,
-              onClose: () => {
-                clearInterval(timerInterval);
-              },
-            }).then((result) => {
-              window.location.reload();
-            });
+            Swal.fire(
+              "Negocio Eliminada",
+              nombre + " ha sido eliminado",
+              "success"
+            );
+            setReload(true);
           })
           .catch((err) => {
             Swal.fire("Algo salió mal", "Erro: " + err, "error");
@@ -113,7 +109,7 @@ export default function NegocioDetalleLocal(props) {
         +
       </button>
       {/* Modal Local*/}
-      <ModalLocal id={id} />
+      <ModalLocal id={id} setReload={setReload} />
     </div>
   );
 }

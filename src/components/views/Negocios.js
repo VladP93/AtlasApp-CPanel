@@ -16,6 +16,7 @@ export default function Negocios() {
   const [negocios, setNegocios] = useState([]);
   const [sortParam, setSortParam] = useState("");
   const [search, setSearch] = useState("");
+  const [reload, setReload] = useState(false);
 
   const filtro = [
     {
@@ -74,8 +75,9 @@ export default function Negocios() {
       dataFill("createAt", "desc");
     }
 
+    setReload(false);
     dataFillSearch(search);
-  }, [sortParam, search]);
+  }, [sortParam, search, reload]);
 
   const dataFill = (orderBy, order) => {
     db.collection("negocios")
@@ -126,7 +128,7 @@ export default function Negocios() {
           buscar={buscar}
         />
       </div>
-      <NegocioList negocios={negocios} />
+      <NegocioList negocios={negocios} setReload={setReload} />
       <Footer />
     </div>
   );
