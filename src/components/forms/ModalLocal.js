@@ -134,8 +134,8 @@ export default function ModalLocal(props) {
                       containerElement={<div style={{ height: `400px` }} />}
                       mapElement={<div style={{ height: `100%` }} />}
                       center={{
-                        lat: position.latitude,
-                        lng: position.longitude,
+                        lat: parseFloat(position.latitude),
+                        lng: parseFloat(position.longitude),
                       }}
                       zoom={15}
                     />
