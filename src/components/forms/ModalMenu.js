@@ -18,6 +18,10 @@ export default function ModalMenu(props) {
   useEffect(() => {
     if (idMenu === 0) {
       setIsEdit(false);
+      setNuevoMenu({ nombre: "", descripcion: "", precio: 0 });
+      document.getElementById("nombreMenu").value = "";
+      document.getElementById("descripcion").value = "";
+      document.getElementById("precio").value = 0;
     } else {
       setIsEdit(true);
 
@@ -28,6 +32,9 @@ export default function ModalMenu(props) {
         .get()
         .then((res) => {
           setNuevoMenu(res.data());
+          document.getElementById("nombreMenu").value = res.data().nombre;
+          document.getElementById("descripcion").value = res.data().descripcion;
+          document.getElementById("precio").value = res.data().precio;
         });
     }
   }, [id, idMenu]);
@@ -87,6 +94,7 @@ export default function ModalMenu(props) {
               "El item del menú ha sido modificado exitosamente",
               "success"
             );
+            setReload(true);
           })
           .catch((err) => {
             Swal.fire("Error", err, "error");
@@ -129,7 +137,7 @@ export default function ModalMenu(props) {
                   <input
                     type="text"
                     className="form-control"
-                    id="nombre"
+                    id="nombreMenu"
                     onChange={(e) => {
                       onChangeMenu(e, "nombre");
                     }}
@@ -179,6 +187,9 @@ export default function ModalMenu(props) {
                 type="button"
                 className="btn btn-secondary"
                 data-dismiss="modal"
+                onClick={() => {
+                  setReload(true);
+                }}
               >
                 Cerrar
               </button>
@@ -190,7 +201,7 @@ export default function ModalMenu(props) {
                 }}
                 data-dismiss="modal"
               >
-                Agregar
+                {isEdit ? "Editar" : "Agregar"}
               </button>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Moment from "react-moment";
@@ -28,7 +28,6 @@ export default function NegocioList(props) {
           .doc(id)
           .delete()
           .then(() => {
-            let timerInterval;
             Swal.fire(
               "Negocio Eliminada",
               nombre + " ha sido eliminado",

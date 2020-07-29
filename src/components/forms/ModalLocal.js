@@ -58,7 +58,8 @@ export default function ModalLocal(props) {
             "El local " + nuevoLocal.nombre + " ha sido agregado exitosamente",
             "success"
           );
-          setTimeout(2000);
+          document.getElementById("nombre").value = "";
+          document.getElementById("direccion").value = "";
           setReload(true);
         })
         .catch((err) => {
